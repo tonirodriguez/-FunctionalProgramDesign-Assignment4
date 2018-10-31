@@ -4,7 +4,7 @@ object TweetLength {
   final val MaxTweetLength = 140
 
   def tweetRemainingCharsCount(tweetText: Signal[String]): Signal[Int] = {
-    ???
+    Signal(MaxTweetLength - tweetLength(tweetText.apply()))
   }
 
   def colorForRemainingCharsCount(remainingCharsCount: Signal[Int]): Signal[String] = {
@@ -19,7 +19,7 @@ object TweetLength {
    *  https://dev.twitter.com/overview/api/counting-characters
    */
   private def tweetLength(text: String): Int = {
-    /* This should be simply text.codePointCount(0, text.length), but it
+    /* This should besimply text.codePointCount(0, text.length), but it
      * is not implemented in Scala.js 0.6.2.
      */
     if (text.isEmpty) 0
