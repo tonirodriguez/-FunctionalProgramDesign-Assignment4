@@ -4,15 +4,18 @@ object TweetLength {
   final val MaxTweetLength = 140
 
   def tweetRemainingCharsCount(tweetText: Signal[String]): Signal[Int] = {
-    Var(MaxTweetLength - tweetLength(tweetText.apply()))
+    Signal(MaxTweetLength - tweetLength(tweetText()))
   }
 
   def colorForRemainingCharsCount(remainingCharsCount: Signal[Int]): Signal[String] = {
-    val nChars = remainingCharsCount.apply()
-    nChars match {
-      case nChars: Int if (nChars >= 15) => Var("green")
-      case nChars: Int if ((0 <= nChars) && (nChars < 15)) => Var("orange")
-      case nChars: Int if (nChars < 0) => Var("red")
+    Signal {
+      if (remainingCharsCount() >= 15) {
+        "green"
+      } else if (0 <= remainingCharsCount() && remainingCharsCount() <= 14) {
+        "orange"
+      } else {
+        "red"
+      }
     }
   }
 
